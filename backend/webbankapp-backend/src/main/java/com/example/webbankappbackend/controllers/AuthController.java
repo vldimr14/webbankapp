@@ -1,23 +1,24 @@
 package com.example.webbankappbackend.controllers;
 
 import java.net.URI;
-import java.security.Principal;
+import java.net.URISyntaxException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.webbankappbackend.models.User;
 import com.example.webbankappbackend.repositories.UserRepository;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
@@ -38,8 +39,17 @@ public class AuthController {
             String password) {
     }
 
+    @GetMapping
+    public ResponseEntity<String> auth() {
+        return ResponseEntity.ok("This is an auth page.");
+    }
+
     @PostMapping("/register")
-    private void register(@RequestBody NewUserRequest newUserRequest) {
+    private ResponseEntity<User> register(@RequestBody NewUserRequest newUserRequest) throws URISyntaxException {
+        if (userRepository.findByEmail(newUserRequest.email) != null) {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(302));
+        }
+
         User user = new User(
                 newUserRequest.email(),
                 new BCryptPasswordEncoder().encode(newUserRequest.password()),
@@ -48,6 +58,7 @@ public class AuthController {
                 newUserRequest.passportId(),
                 newUserRequest.birthDate());
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return ResponseEntity.created(new URI("/api/account/" + savedUser.getId())).body(savedUser);
     }
 }

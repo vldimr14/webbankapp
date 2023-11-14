@@ -3,31 +3,33 @@ package com.example.webbankappbackend.controllers;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.webbankappbackend.models.User;
 import com.example.webbankappbackend.repositories.UserRepository;
 
+@RequestMapping("/api")
 @RestController
-public class HomeController {
+public class MainController {
 
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/")
-    public String home() {
-        return "This is a home page.";
+    public ResponseEntity<String> home() {
+        return ResponseEntity.ok("This is a home page.");
     }
 
     @GetMapping("/account")
-    public String account(Principal principal) {
+    public ResponseEntity<User> account(Principal principal) {
         User user = userRepository.findByEmail(principal.getName());
-        return "Hello, " + user.getFirstName();
-    }
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-    @GetMapping("/auth")
-    public String auth() {
-        return "This is an auth page.";
+        return ResponseEntity.ok(user);
     }
 }

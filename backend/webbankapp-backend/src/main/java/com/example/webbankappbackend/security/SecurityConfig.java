@@ -26,15 +26,15 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(
                         (request) -> request
-                                .requestMatchers("/")
+                                .requestMatchers("/api")
                                 .permitAll()
-                                .requestMatchers("/auth/**")
+                                .requestMatchers("/api/auth/**")
                                 .permitAll()
-                                .requestMatchers("/account").hasAuthority("USER")
+                                .requestMatchers("/api/account").hasAuthority("USER")
                                 .anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/auth/login")
+                .formLogin(form -> form.loginPage("/api/auth/login")
                         .permitAll()
-                        .defaultSuccessUrl("/account"))
+                        .defaultSuccessUrl("/api/account"))
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults());
 
