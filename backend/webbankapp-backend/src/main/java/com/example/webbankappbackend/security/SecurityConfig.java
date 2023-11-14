@@ -33,7 +33,8 @@ public class SecurityConfig {
                                 .requestMatchers("/account").hasAuthority("USER")
                                 .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/auth/login")
-                        .permitAll())
+                        .permitAll()
+                        .defaultSuccessUrl("/account"))
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults());
 
