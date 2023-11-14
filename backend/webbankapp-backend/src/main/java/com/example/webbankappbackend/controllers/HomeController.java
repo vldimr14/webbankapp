@@ -15,4 +15,9 @@ public class HomeController {
     public String account() {
         return "This is an account page.";
     }
+
+    @GetMapping("/auth")
+    public String auth() {
+        return "This is an auth page.";
+    }
 }

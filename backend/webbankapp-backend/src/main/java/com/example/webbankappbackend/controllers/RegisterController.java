@@ -15,7 +15,7 @@ import com.example.webbankappbackend.models.User;
 import com.example.webbankappbackend.repositories.UserRepository;
 
 @RestController
-@RequestMapping("/register")
+@RequestMapping("/auth/register")
 public class RegisterController {
 
     @Autowired
