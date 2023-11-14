@@ -5,6 +5,8 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +17,8 @@ import com.example.webbankappbackend.models.User;
 import com.example.webbankappbackend.repositories.UserRepository;
 
 @RestController
-@RequestMapping("/auth/register")
-public class RegisterController {
+@RequestMapping("/auth")
+public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
@@ -31,11 +33,16 @@ public class RegisterController {
 
     }
 
-    @PostMapping
+    public record LoginRequest(
+            String username,
+            String password) {
+    }
+
+    @PostMapping("/register")
     private void register(@RequestBody NewUserRequest newUserRequest) {
         User user = new User(
                 newUserRequest.email(),
-                newUserRequest.password(),
+                new BCryptPasswordEncoder().encode(newUserRequest.password()),
                 newUserRequest.firstName(),
                 newUserRequest.lastName(),
                 newUserRequest.passportId(),

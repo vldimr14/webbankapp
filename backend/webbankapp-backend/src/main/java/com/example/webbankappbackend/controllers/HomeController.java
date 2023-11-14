@@ -1,10 +1,19 @@
 package com.example.webbankappbackend.controllers;
 
+import java.security.Principal;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.webbankappbackend.models.User;
+import com.example.webbankappbackend.repositories.UserRepository;
+
 @RestController
 public class HomeController {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/")
     public String home() {
@@ -12,8 +21,9 @@ public class HomeController {
     }
 
     @GetMapping("/account")
-    public String account() {
-        return "This is an account page.";
+    public String account(Principal principal) {
+        User user = userRepository.findByEmail(principal.getName());
+        return "Hello, " + user.getFirstName();
     }
 
     @GetMapping("/auth")

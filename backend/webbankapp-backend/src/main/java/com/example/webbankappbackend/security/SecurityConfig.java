@@ -30,10 +30,10 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/auth/**")
                                 .permitAll()
-                                .requestMatchers("/auth/register")
-                                .permitAll()
                                 .requestMatchers("/account").hasAuthority("USER")
                                 .anyRequest().authenticated())
+                .formLogin(form -> form.loginPage("/auth/login")
+                        .permitAll())
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults());
 
