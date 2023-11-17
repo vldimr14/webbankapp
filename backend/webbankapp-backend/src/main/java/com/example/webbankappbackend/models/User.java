@@ -2,7 +2,7 @@ package com.example.webbankappbackend.models;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,9 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,10 +47,14 @@ public class User implements UserDetails {
 	private String birthDate;
 	@Column(nullable = false)
 	private String signupDate;
-	@Column
-	private String role;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
-	public User(String email, String password, String firstName, String lastName, String passportId, String birthDate) {
+	@OneToMany(mappedBy = "user")
+	private List<BankAccount> bankAccounts;
+
+	public User(String email, String password, String firstName, String lastName, String passportId, String birthDate,
+			Role role) {
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
@@ -55,12 +62,12 @@ public class User implements UserDetails {
 		this.passportId = passportId;
 		this.birthDate = birthDate;
 		signupDate = LocalDate.now().toString();
-		role = "USER";
+		this.role = role;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singleton(new SimpleGrantedAuthority(role));
+		return List.of(new SimpleGrantedAuthority(role.name()));
 	}
 
 	@Override

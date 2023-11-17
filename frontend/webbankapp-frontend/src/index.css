@@ -12,6 +12,6 @@ code {
     monospace;
 }
 
-.btn {
-  background-color: red;
+.signup-form {
+  width: 360px;
 }
