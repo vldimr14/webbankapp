@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -23,10 +23,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "accounts")
 public class BankAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(nullable = false)
-    private String currency;
+    private String id;
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
     @Column(nullable = false)
     private BigDecimal balance;
     @ManyToOne
