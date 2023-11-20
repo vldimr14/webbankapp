@@ -1,10 +1,9 @@
 package com.example.webbankappbackend.account;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.UUID;
+import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
@@ -62,17 +61,15 @@ public class AccountService {
         return bankAccount;
     }
 
-    public NewBankAccountResponse createAccount(Principal principal) {
+    public String createAccount(Principal principal) {
         User user = userRepository.findByEmail(principal.getName()).orElseThrow();
 
+        // check if user already has a bank account
         if (bankAccountRepository.findByUserId(user.getId()).isPresent()) {
-            return NewBankAccountResponse.builder()
-                    .message("User already has a bank account.")
-                    .build();
+            return "User already has a bank account.";
         }
 
         // generate unique id for new bank account
-
         String bankAccountId;
 
         do {
@@ -89,21 +86,19 @@ public class AccountService {
 
         bankAccountRepository.save(bankAccount);
 
-        return NewBankAccountResponse.builder()
-                .message("Bank account successfully created")
-                .build();
+        return "Bank account successfully created";
     }
 
-    // TODO generate unique random 26 digit number (can be few numbers) and convert
-    // it to string
+    // generate 26 digit random number.
     private String generateBankAccountId() {
-        String id = String.format("%026d", new BigInteger(
-                UUID.randomUUID()
-                        .toString()
-                        .replace("-", "")),
-                16);
+        StringBuilder str = new StringBuilder();
+        Random random = new Random();
 
-        return id;
+        for (int i = 0; i < 26; i++) {
+            str.append(random.nextInt(10));
+        }
+
+        return str.toString();
     }
 
 }

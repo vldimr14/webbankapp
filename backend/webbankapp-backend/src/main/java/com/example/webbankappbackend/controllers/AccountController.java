@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.webbankappbackend.account.AccountInfoResponse;
 import com.example.webbankappbackend.account.AccountService;
-import com.example.webbankappbackend.account.NewBankAccountResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +25,7 @@ public class AccountController {
     }
 
     @GetMapping("/create_account")
-    public ResponseEntity<NewBankAccountResponse> createAccount(Principal principal) {
+    public ResponseEntity<String> createAccount(Principal principal) {
         return ResponseEntity.ok(service.createAccount(principal));
     }
 }
