@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.webbankappbackend.account.AccountInfoResponse;
 import com.example.webbankappbackend.account.AccountService;
+import com.example.webbankappbackend.account.TransferRequest;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +30,11 @@ public class AccountController {
     @GetMapping("/create_account")
     public ResponseEntity<String> createAccount(Principal principal) {
         return ResponseEntity.ok(service.createAccount(principal));
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<String> transfer(@RequestBody TransferRequest transferRequest,
+            Principal principal) {
+        return ResponseEntity.ok(service.transfer(transferRequest, principal));
     }
 }
