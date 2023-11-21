@@ -3,6 +3,7 @@ package com.example.webbankappbackend.account;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ import com.example.webbankappbackend.models.User;
 import com.example.webbankappbackend.repositories.BankAccountRepository;
 import com.example.webbankappbackend.repositories.TransactionRepository;
 import com.example.webbankappbackend.repositories.UserRepository;
+import com.google.gson.Gson;
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,6 +47,7 @@ public class AccountService {
                 .bankAccountId(bankAccount.getId())
                 .bankAccountBalance(bankAccount.getBalance())
                 .bankAccountCurrency(bankAccount.getCurrency())
+                .transactions(new Gson().toJson(getTransactions(bankAccount.getId()).toString()))
                 .build();
     }
 
@@ -64,6 +67,10 @@ public class AccountService {
                 .orElseThrow();
 
         return bankAccount;
+    }
+
+    public ArrayList<Transaction> getTransactions(String accountId) {
+        return transactionRepository.findAllBySenderIdOrRecipientId(accountId, accountId);
     }
 
     public String createAccount(Principal principal) {

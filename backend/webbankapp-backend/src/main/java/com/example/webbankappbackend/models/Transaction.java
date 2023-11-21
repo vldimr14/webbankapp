@@ -10,10 +10,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,4 +43,13 @@ public class Transaction {
 
     @Column(nullable = false)
     private String date;
+
+    @Override
+    public String toString() {
+        return "Transaction [id=" + id + ", description=" + description + ", amount=" + amount + ", currency="
+                + currency + ", type=" + type + ", sender=" + sender.getId() + ", recipient=" + recipient.getId()
+                + ", date=" + date
+                + "]";
+    }
+
 }
