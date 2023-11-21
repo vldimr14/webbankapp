@@ -1,5 +1,7 @@
 package com.example.webbankappbackend.repositories;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +14,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
 
     Optional<Transaction> findById(String id);
 
-    Optional<Transaction> findBySenderId(String id);
+    List<Transaction> findAllBySenderId(String id);
 
-    Optional<Transaction> findByRecipientId(String id);
+    List<Transaction> findAllByRecipientId(String id);
+
+    ArrayList<Transaction> findAllBySenderIdOrRecipientId(String senderId, String recipientId);
 }
