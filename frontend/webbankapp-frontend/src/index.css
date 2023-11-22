@@ -1,3 +1,17 @@
+:root {
+  --main-background-color: #f8f8f8;
+  --element-background-color: #ffffff;
+  --main-text-color: #141414;
+  --active-text-color: #E6E6E6;
+  --border-color: #aaaaaa;
+  --input-background-color: #ffffff;
+  --regular-font-size: 1rem;
+  --font-family: Arial,
+    Helvetica,
+    sans-serif;
+  --btn-submit-color: #00a2ed;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -12,6 +26,74 @@ code {
     monospace;
 }
 
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--main-background-color);
+  color: var(--main-text-color);
+  min-height: 100vh;
+  font-family: var(--font-family);
+}
+
+/* SIGN UP, LOGIN FORM */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--main-background-color);
+}
+
 .signup-form {
-  width: 360px;
+  width: 460px;
+  height: 680px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: var(--element-background-color);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form {
+  height: 300px;
+}
+
+.input-group {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+input {
+  background-color: var(--input-background-color);
+  color: var(--main-text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: var(--regular-font-size);
+}
+
+.btn {
+  height: 40px;
+  background-color: var(--main-in-color);
+  color: var(--main-text-color);
+  border-radius: 5px;
+  border: none;
+  transition: all 0.1s ease;
+}
+
+.btn-submit {
+  background-color: var(--btn-submit-color);
+  color: var(--element-background-color);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #00aeff;
+  cursor: pointer;
 }

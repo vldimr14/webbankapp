@@ -1,5 +1,5 @@
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import SignupForm from './components/SignupForm.js';
 import LoginForm from './components/LoginForm.js';
 
 function App() {
