@@ -1,6 +1,6 @@
 import '../index.css';
 
-function LoginForm() {
+function LoginComponent() {
 
     return (
       <div className="form-container">
@@ -23,4 +23,4 @@ function LoginForm() {
     );
 }
 
-export default LoginForm;
+export default LoginComponent;
