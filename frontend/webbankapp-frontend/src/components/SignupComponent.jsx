@@ -61,6 +61,10 @@ function SignupComponent() {
               <input type="password" value={passwordRepeat} onChange={e => setPasswordRepeat(e.target.value)} id="passwordRepeat" placeholder="password"/>
                 
               <button onClick={handleRegistration} className="btn btn-submit">Sign up</button>
+              
+              <p className='link'>
+                <a href='#'>Already have an account? Login here</a>
+              </p>
             </div>
         </div>
       </div>

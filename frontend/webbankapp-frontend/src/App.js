@@ -1,10 +1,12 @@
 import './index.css';
-import SignupComponent from './components/SignupComponent.js';
+import Pages from './pages/Pages';
 
 function App() {
 
   return (
-    <SignupComponent />
+    <div>
+      <Pages />
+    </div>
   )
 }
 
