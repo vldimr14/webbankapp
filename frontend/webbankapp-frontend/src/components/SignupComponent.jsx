@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../index.css';
 import api from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function SignupComponent() {
 
@@ -12,26 +13,27 @@ function SignupComponent() {
     const [passportId, setPassportId] = useState('');
     const [birthDate, setBirthDate] = useState('');
 
+    const navigate = useNavigate();
+
     const handleRegistration = async () => {
-      try {
-        // TODO validate form
-        if (password !== passwordRepeat) {
-          console.error("Passwords don't match");
-        }
-
-        const response = await api.post("/api/auth/register", {
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName,
-          passportId: passportId,
-          birthDate: birthDate
-        });
-
-        console.log('Message: ', response.data);
-      } catch (error) {
-        console.error('Registration failed', error.response ? error.response.data : error.message);
+      // TODO validate form
+      if (password !== passwordRepeat) {
+        console.error("Passwords don't match");
       }
+
+      const response = await api.post("/api/auth/register", {
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        passportId: passportId,
+        birthDate: birthDate
+      }).catch(error => {
+        console.error('Registration failed', error.response ? error.response.data : error.message);
+      });
+
+      console.log('Message: ', response.data);
+      navigate('/profile', true);
     }
 
     return (

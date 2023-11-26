@@ -1,23 +1,26 @@
 import { useState } from 'react';
 import '../index.css';
 import api from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function LoginComponent() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = async () => {
-      try {
-        const response = await api.post("/api/auth/login", {
-          email: email,
-          password: password,
-        });
+    const navigate = useNavigate();
 
-        console.log('Message: ', response.data);
-      } catch (error) {
+    const handleLogin = async () => {
+      // TODO validate form
+      const response = await api.post("/api/auth/authenticate", {
+        email: email,
+        password: password,
+      }).catch(error => {
         console.error('Login failed', error.response ? error.response.data : error.message);
-      }
+      });
+
+      console.log('Message: ', response.data);
+      navigate('/profile', true);
     }
 
     return (

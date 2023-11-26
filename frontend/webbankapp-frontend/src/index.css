@@ -49,7 +49,8 @@ header {
   padding: 20px;
   color: var(--main-text-color);
   font-weight: 600;
-  /* background-color: red; */
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 a:visited,
@@ -201,4 +202,26 @@ input {
 .btn:hover {
   background-color: #00aeff;
   cursor: pointer;
+}
+
+/* HOME PAGE */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-text {
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+.secondary-text {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #3a3a3a;
+}
+
+.about-container {
+  display: flex;
 }
