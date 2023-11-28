@@ -47,7 +47,7 @@ function LoginComponent() {
               <label htmlFor="password">Password</label>
               <input type="password" value={password} onChange={e => setPassword(e.target.value)} id="password" placeholder="password"/>
                 
-              <button onClick={handleLogin} className="btn btn-submit">Sign up</button>
+              <button onClick={handleLogin} className="btn btn-submit">Log in</button>
 
               <p className='link'>
                 <a href='#'>Don't have an account? Sign up here</a>
