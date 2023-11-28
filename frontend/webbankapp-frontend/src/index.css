@@ -225,3 +225,42 @@ input {
 .about-container {
   display: flex;
 }
+
+/* PROFILE PAGE */
+.profile-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  margin: 15px;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  background-color: var(--element-background-color);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.user-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.bank-account {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 5px;
+}
+
+.label {
+  font-size: 1.3rem;
+}
+
+.account-number {
+  font-size: 1.3rem;
+}
+
+.balance {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
