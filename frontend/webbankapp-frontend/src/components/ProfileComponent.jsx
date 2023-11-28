@@ -11,7 +11,7 @@ function  ProfileComponent() {
 
   useEffect(() => {
     getProfileInfo();
-  });
+  }, []);
 
   const getProfileInfo = async () => {
     const response = await api.get('/api/profile', {
