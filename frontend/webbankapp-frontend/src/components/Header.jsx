@@ -1,7 +1,17 @@
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 import '../index.css';
+import Cookies from 'universal-cookie';
 
 function Header() {
+
+  const cookies = new Cookies();
+  const navigate = useNavigate();
+
+  const logout = () => {
+    cookies.remove('jwt-token');
+    navigate('/', true);
+  }
+
   return (
     <header>
       <a href="#" className="logo">
@@ -13,12 +23,17 @@ function Header() {
             Home
           </div>
         </Link>
-        {/* TODO Render only if user is authenticated */}
-        <Link to={'/profile'}>
-          <div className="link">
-            Profile
-          </div>
-        </Link>
+
+        {/* Render only if user is authenticated */
+          cookies.get('jwt-token') && (
+            <Link to={'/profile'}>
+              <div className="link">
+                Profile
+              </div>
+            </Link>
+          )
+        }
+
         <Link to={'/contact'}>
           <div className="link">
             Contact
@@ -31,19 +46,26 @@ function Header() {
         </Link>        
       </div>
 
-      {/* TODO Render these only if user is not authenticated. */}
-        <div className="authentication-links">
-          <Link to='/login'>
-            <div className="link">
-                Login
-            </div>
-          </Link>
-          <Link to={'/signup'}>
-            <div className="link">
-              Sign up
-            </div>
-          </Link>
-        </div>
+      {/*  Render depending on user authentication */
+        !cookies.get('jwt-token') ? (
+          <div className="authentication-links">
+            <Link to='/login'>
+              <div className="link">
+                  Login
+              </div>
+            </Link>
+            <Link to={'/signup'}>
+              <div className="link">
+                Sign up
+              </div>
+            </Link>
+          </div>
+        ) : (
+          <button className='btn' onClick={logout}>
+            Log out
+          </button>
+        )
+      }
     </header>
   );
 }

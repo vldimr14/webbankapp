@@ -12,13 +12,24 @@ function SignupComponent() {
     const [lastName, setLastName] = useState('');
     const [passportId, setPassportId] = useState('');
     const [birthDate, setBirthDate] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
 
-    const handleRegistration = async () => {
-      // TODO validate form
+
+    const validateForm = () => {
       if (password !== passwordRepeat) {
-        console.error("Passwords don't match");
+        setErrorMessage('Password do not match');
+        return false;
+      }
+    }
+
+    const handleRegistration = async () => {
+
+      const validated = validateForm();
+
+      if (!validated) {
+        
       }
 
       const response = await api.post("/api/auth/register", {
@@ -33,7 +44,7 @@ function SignupComponent() {
       });
 
       console.log('Message: ', response.data);
-      navigate('/profile', true);
+      navigate('/login', true);
     }
 
     return (
@@ -41,6 +52,7 @@ function SignupComponent() {
         <h1>Sign up</h1>
         <div className="signup-form">
             <div className="input-group">
+              <div className='errorMessage'>{errorMessage}</div>
               <label htmlFor="username">Email address</label>
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} id="username" placeholder="john.smith@gmail.com"/>
 

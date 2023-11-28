@@ -2,6 +2,8 @@ import { useState } from 'react';
 import '../index.css';
 import api from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 function LoginComponent() {
 
@@ -9,6 +11,8 @@ function LoginComponent() {
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
+
+    const cookies = new Cookies();
 
     const handleLogin = async () => {
       // TODO validate form
@@ -20,6 +24,15 @@ function LoginComponent() {
       });
 
       console.log('Message: ', response.data);
+
+      const decodedJwt = jwtDecode(response.data.token);
+
+      cookies.set('jwt-token', response.data.token, {
+        expires: new Date(decodedJwt.exp * 1000),
+      });
+
+      console.log(cookies.get('jwt-token'));
+      
       navigate('/profile', true);
     }
 
