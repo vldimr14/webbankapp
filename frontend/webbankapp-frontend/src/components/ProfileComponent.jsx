@@ -36,9 +36,15 @@ function  ProfileComponent() {
     navigate('/profile/transfer')
   }
 
+  let transactions;
+  
+  if (profileData) {
+    transactions = JSON.parse(profileData.transactions);
+  }
+
   return (
-    <div className="container">
-      <div className="profile-card">
+    <div className="container profile-container">
+      <div className="card profile-card">
         <div className="user-name">
           {profileData.firstName} {profileData.lastName}
         </div>
@@ -59,8 +65,45 @@ function  ProfileComponent() {
         ) : (
           <button className='btn btn-submit' onClick={createBankAccount}>Open bank account</button>
         )}
-
       </div>
+
+      {/* Render short transaction history (15 latest) */
+        profileData.bankAccountId && (
+         <div className="card transaction-history">
+          <table>
+            <thead>
+              <h2>Latest transactions</h2>
+              <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Description</th>
+                {/* <th>To</th> */}
+                <th>ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions.map((transaction) => {
+                return (
+                  <tr>
+                    <td>{transaction.date}</td>
+                    {profileData.bankAccountId === transaction.recipient.id ||
+                     profileData.bankAccountId === transaction.recipient ? (
+                      <td className='income'>+{transaction.amount}</td>
+                    ) : (
+                      <td className='expense'>-{transaction.amount}</td>
+                    )}
+                    
+                    <td>{transaction.description}</td>
+                    {/* TODO recipient or sender */}
+                    {/* <td>{transaction.recipient.id}</td> */}
+                    <td>{transaction.id}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+         </div> 
+        )}
     </div>
   );
 }

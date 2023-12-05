@@ -17,7 +17,8 @@ import com.example.webbankappbackend.models.User;
 import com.example.webbankappbackend.repositories.BankAccountRepository;
 import com.example.webbankappbackend.repositories.TransactionRepository;
 import com.example.webbankappbackend.repositories.UserRepository;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,13 +42,25 @@ public class AccountService {
                     .build();
         }
 
+        ArrayList<Transaction> transactions = getTransactions(bankAccount.getId());
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonTransactions = "";
+        try {
+            jsonTransactions = objectMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(transactions);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         return AccountInfoResponse.builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .bankAccountId(bankAccount.getId())
                 .bankAccountBalance(bankAccount.getBalance())
                 .bankAccountCurrency(bankAccount.getCurrency())
-                .transactions(new Gson().toJson(getTransactions(bankAccount.getId()).toString()))
+                .transactions(jsonTransactions)
                 .build();
     }
 
