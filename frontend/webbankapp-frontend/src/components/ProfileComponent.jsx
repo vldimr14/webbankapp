@@ -1,7 +1,7 @@
 import api from 'axios';
 import Cookies from 'universal-cookie';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function  ProfileComponent() {
@@ -34,6 +34,10 @@ function  ProfileComponent() {
   
   const transferHandler = () => {
     navigate('/profile/transfer')
+  }
+
+  const detailsHandler = (id) => {
+    navigate(`/profile/transactions/${id}`);
   }
 
   let transactions;
@@ -70,9 +74,9 @@ function  ProfileComponent() {
       {/* Render short transaction history (15 latest) */
         profileData.bankAccountId && (
          <div className="card transaction-history">
+          <h2>Latest transactions</h2>
           <table>
             <thead>
-              <h2>Latest transactions</h2>
               <tr>
                 <th>Date</th>
                 <th>Amount</th>
@@ -84,7 +88,7 @@ function  ProfileComponent() {
             <tbody>
               {transactions.map((transaction) => {
                 return (
-                  <tr>
+                  <tr key={transaction.id}>
                     <td>{transaction.date}</td>
                     {profileData.bankAccountId === transaction.recipient.id ||
                      profileData.bankAccountId === transaction.recipient ? (
@@ -97,6 +101,9 @@ function  ProfileComponent() {
                     {/* TODO recipient or sender */}
                     {/* <td>{transaction.recipient.id}</td> */}
                     <td>{transaction.id}</td>
+                    <td>
+                      <Link to={`transactions/${transaction.id}`} className='btn btn-submit'>Details</Link>
+                    </td>
                   </tr>
                 )
               })}

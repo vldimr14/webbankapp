@@ -4,6 +4,7 @@ import Transfer from './Transfer';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Login from './Login';
 import Signup from './Signup';
+import TransactionDetails from './TransactionDetails';
 
 function Pages() {
   return (
@@ -18,6 +19,7 @@ function Pages() {
         {/* TODO access only if user does have a bank account */}
         <Route path='/profile/transfer' element={<Transfer />} />
         <Route path='/profile/history' element={<Home />} />
+        <Route path='/profile/transactions/:transactionId' element={<TransactionDetails />}/>
       </Routes>
     </BrowserRouter>
   );

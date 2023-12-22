@@ -86,6 +86,22 @@ public class AccountService {
         return transactionRepository.findAllBySenderIdOrRecipientId(accountId, accountId);
     }
 
+    public String getTransaction(String id) {
+        Transaction transaction = transactionRepository.findById(id).orElseThrow();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonTransaction = "";
+        try {
+            jsonTransaction = objectMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(transaction);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return jsonTransaction;
+    }
+
     public String createAccount(Principal principal) {
         User user = getUserInfo(principal);
 
