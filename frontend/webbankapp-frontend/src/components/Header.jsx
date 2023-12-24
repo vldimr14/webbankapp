@@ -61,7 +61,7 @@ function Header() {
             </Link>
           </div>
         ) : (
-          <button className='btn btn-submit' onClick={logout}>
+          <button className='btn' onClick={logout}>
             Log out
           </button>
         )

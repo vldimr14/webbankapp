@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../index.css';
 import api from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function SignupComponent() {
 
@@ -77,7 +77,9 @@ function SignupComponent() {
               <button onClick={handleRegistration} className="btn btn-submit">Sign up</button>
               
               <p className='link'>
-                <a href='#'>Already have an account? Login here</a>
+                <Link to="/login">
+                  <a href='#'>Already have an account? Login here</a>
+                </Link>
               </p>
             </div>
         </div>

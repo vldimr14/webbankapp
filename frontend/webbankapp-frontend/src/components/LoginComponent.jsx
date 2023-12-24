@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../index.css';
 import api from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { jwtDecode } from 'jwt-decode';
 
@@ -50,7 +50,9 @@ function LoginComponent() {
               <button onClick={handleLogin} className="btn btn-submit">Log in</button>
 
               <p className='link'>
-                <a href='#'>Don't have an account? Sign up here</a>
+                <Link to="/signup">
+                  <a href='#'>Don't have an account? Sign up here</a>
+                </Link>
               </p>
             </div>
         </div>

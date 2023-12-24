@@ -47,23 +47,31 @@ function  ProfileComponent() {
   }
 
   return (
-    <div className="container profile-container">
-      <div className="card profile-card">
-        <div className="user-name">
-          {profileData.firstName} {profileData.lastName}
+    <div className="child-container">
+      <div className="greeting-container">
+        <h1 className='large-header'>
+          Welcome, {profileData.firstName} {profileData.lastName}
+        </h1>
+        <div className="transfer">
+          <button className='btn' onClick={transferHandler}>Transfer</button>
         </div>
+      </div>
+      <div className="card">
+        <h2 className='medium-header'>Accounts</h2>
 
         {/* Render bank account information */
         profileData.bankAccountId ? (
-        <div className="bank-account">
-          <div className="label">Bank account id</div>
-          <div className="account-number">{profileData.bankAccountId}</div>
-          <div className="label">Balance</div>
-          <div className="balance">
-            {profileData.bankAccountBalance} {profileData.bankAccountCurrency}
+        <div className="card account-card">
+          <div className="flex-group">
+            <div className="small-header">Bank account id</div>
+            <div className="account-number">{profileData.bankAccountId}</div>
           </div>
-          <div className="transfer">
-            <button className='btn btn-submit' onClick={transferHandler}>Transfer</button>
+          
+          <div className="flex-group">
+            <div className="small-header">Available Balance</div>
+            <div className="balance">
+              {profileData.bankAccountBalance} {profileData.bankAccountCurrency}
+            </div>
           </div>
         </div>
         ) : (
@@ -71,40 +79,47 @@ function  ProfileComponent() {
         )}
       </div>
 
-      {/* Render short transaction history (15 latest) */
+      {/* Render short transaction history (TODO 15 latest) */
         profileData.bankAccountId && (
-         <div className="card transaction-history">
-          <h2>Latest transactions</h2>
+         <div className="card">
+          <h2 className='medium-header'>Latest transactions</h2>
           <table>
             <thead>
-              <tr>
-                <th>Date</th>
-                <th>Amount</th>
+              <tr className='small-header'>
                 <th>Description</th>
-                {/* <th>To</th> */}
-                <th>ID</th>
+                <th>Payment method</th>
+                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
               {transactions.map((transaction) => {
                 return (
+                  <Link to={`transactions/${transaction.id}`}>
                   <tr key={transaction.id}>
-                    <td>{transaction.date}</td>
+                    <td>
+                      <div className="transaction-description">
+                        <div className="medium-header">
+                          {transaction.description}
+                        </div>
+                        <div className="small-header">
+                          {transaction.date}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className='small-header'>
+                        {transaction.type}
+                      </div>
+                    </td>
                     {profileData.bankAccountId === transaction.recipient.id ||
                      profileData.bankAccountId === transaction.recipient ? (
-                      <td className='income'>+{transaction.amount}</td>
+                      <td className='income small-header'>+{transaction.amount} PLN</td>
                     ) : (
-                      <td className='expense'>-{transaction.amount}</td>
+                      <td className='expense small-header'>-{transaction.amount} PLN</td>
                     )}
-                    
-                    <td>{transaction.description}</td>
-                    {/* TODO recipient or sender */}
-                    {/* <td>{transaction.recipient.id}</td> */}
-                    <td>{transaction.id}</td>
-                    <td>
-                      <Link to={`transactions/${transaction.id}`} className='btn btn-submit'>Details</Link>
-                    </td>
                   </tr>
+                  {/* <div className="line"></div> */}
+                  </Link>
                 )
               })}
             </tbody>

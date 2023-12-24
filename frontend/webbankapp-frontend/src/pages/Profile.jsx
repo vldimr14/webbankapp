@@ -6,7 +6,7 @@ import ProfileComponent from '../components/ProfileComponent';
 function Profile() {
 
   return (
-		<div>
+		<div className='container'>
 			<Header />
 			<ProfileComponent />
 			<Footer />
