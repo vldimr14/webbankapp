@@ -9,13 +9,30 @@ function LoginComponent() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
 
     const cookies = new Cookies();
 
-    const handleLogin = async () => {
+    const validateForm = () => {
+      if (email == "" || password == "") {
+        setErrorMessage("Fields cannot be empty.");
+        return false;
+      }
+
       // TODO validate form
+
+      return true;
+    }
+
+    const handleLogin = async () => {
+      const validated = validateForm();
+
+      if (!validated) {
+        return;
+      }
+
       const response = await api.post("/api/auth/authenticate", {
         email: email,
         password: password,
@@ -41,6 +58,10 @@ function LoginComponent() {
         <h1>Login</h1>
         <div className="signup-form login-form">
             <div className="input-group">
+              {errorMessage && (
+                <p className='error-message'>{errorMessage}</p>
+              )}
+
               <label htmlFor="username">Email address</label>
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} id="username" placeholder="john.smith@gmail.com"/>
 

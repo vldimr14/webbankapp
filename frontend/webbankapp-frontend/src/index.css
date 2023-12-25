@@ -19,6 +19,7 @@
   --medium-header-size: 1.4rem;
   --small-header-size: 0.9rem;
   --small-header-color: #606060;
+  --error-message-color: #ff0000;
   --btn-font-size: 0.8rem;
 }
 
@@ -202,6 +203,10 @@ footer {
 
 .input-group .link a:hover {
   color: #000;
+}
+
+.error-message {
+  color: var(--error-message-color);
 }
 
 input {
