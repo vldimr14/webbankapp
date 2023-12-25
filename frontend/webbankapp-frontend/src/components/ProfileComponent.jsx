@@ -98,7 +98,7 @@ function  ProfileComponent() {
                   <tr key={transaction.id}>
                     <td>
                       <div className="transaction-description">
-                        <div className="medium-header">
+                        <div className="regular-text">
                           {transaction.description}
                         </div>
                         <div className="small-header">
@@ -118,7 +118,7 @@ function  ProfileComponent() {
                       <td className='expense small-header'>-{transaction.amount} PLN</td>
                     )}
                   </tr>
-                  {/* <div className="line"></div> */}
+                  <div className="line"></div>
                   </Link>
                 )
               })}

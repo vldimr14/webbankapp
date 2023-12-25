@@ -157,9 +157,10 @@ footer {
 }
 
 .line {
-  width: 80%;
+  width: 90%;
   height: 1px;
   background-color: #bcbcbc;
+  margin: 0 auto;
 }
 
 /* SIGN UP, LOGIN FORM */
@@ -321,8 +322,18 @@ table {
 
 tr {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  margin: 5px 0px;
+}
+
+th {
+  width: 150px;
+  text-align: start;
+}
+
+td {
+  width: 150px;
 }
 
 .transaction-description {
