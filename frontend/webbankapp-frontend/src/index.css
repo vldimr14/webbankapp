@@ -220,6 +220,7 @@ input {
   border-radius: 50px;
   border: 1px solid var(--border-color);
   transition: all 0.1s ease;
+  width: fit-content;
 }
 
 .btn:hover {
@@ -357,4 +358,5 @@ td {
   flex-direction: column;
   gap: 10px;
   font-size: 1.2rem;
+  margin-bottom: 15px;
 }

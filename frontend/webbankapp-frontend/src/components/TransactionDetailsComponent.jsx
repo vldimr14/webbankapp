@@ -30,7 +30,7 @@ function TransactionDetailsComponent() {
     <div>
       <div className='form-container'>
         <h2>Transaction #{params.transactionId}</h2>
-        <div className='signup-form'>
+        <div className='card'>
           <div className="transaction-details">
             <div className="Date">Date: {transactionData.date}</div>
             <div className="">Amount: {transactionData.amount} {transactionData.currency}</div>
@@ -39,8 +39,10 @@ function TransactionDetailsComponent() {
             <div className="">Recipient account id: {transactionData && transactionData.recipient.id}</div>
             <div className="">Type: {transactionData.type}</div>
           </div>
+          <Link to="/profile">
+            <button className="btn">Back</button>
+          </Link>
         </div>
-        <Link to="/profile" className='btn btn-submit'>Back</Link>
       </div>
     </div>
   );

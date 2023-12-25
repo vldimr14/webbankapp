@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import api from 'axios';
 
@@ -46,7 +46,10 @@ function TransferComponent() {
               <label htmlFor="description">Description</label>
               <input type="text" value={description} onChange={e => setDescription(e.target.value)} id="description" placeholder="Gift for Kate"/>
                 
-              <button onClick={transferHandler} className="btn btn-submit">Transfer</button>
+              <button onClick={transferHandler} className="btn">Transfer</button>
+              <Link to="/profile">
+                <button className="btn">Back</button>
+              </Link>
             </div>
         </div>
     </div>
