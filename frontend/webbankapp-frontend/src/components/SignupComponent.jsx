@@ -16,12 +16,40 @@ function SignupComponent() {
 
     const navigate = useNavigate();
 
+    const validateName = (name) => {
+      return name.toLowerCase().match(/[A-Za-z]/);
+    }
+
 
     const validateForm = () => {
       if (password !== passwordRepeat) {
-        setErrorMessage('Password do not match');
+        setErrorMessage(`Passwords don't match`);
         return false;
       }
+
+      if (email === "" || password === "" || passwordRepeat === "" 
+        || firstName === "" || lastName === "" || passportId === "" || birthDate === "") {
+        setErrorMessage("Fields cannot be empty.");
+        return false;
+      }
+
+      if (!email.toLowerCase()
+          .match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            setErrorMessage("Email is not valid.");
+            return false;
+      }
+
+      if (!validateName(firstName) || !validateName(lastName)) {
+        setErrorMessage("Invalid firstname or lastname.");
+        return false;
+      }
+
+      if (!birthDate.match(/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/)) {
+        setErrorMessage("Invalid date of birth format");
+        return false;
+      }
+
+      return true;
     }
 
     const handleRegistration = async () => {
@@ -29,7 +57,7 @@ function SignupComponent() {
       const validated = validateForm();
 
       if (!validated) {
-        
+        return;
       }
 
       const response = await api.post("/api/auth/register", {
@@ -40,11 +68,20 @@ function SignupComponent() {
         passportId: passportId,
         birthDate: birthDate
       }).catch(error => {
+        setErrorMessage(error.message);
         console.error('Registration failed', error.response ? error.response.data : error.message);
       });
 
+
+      // TODO registration fail
+      if (response.message !== null) {
+        setErrorMessage(response.message);
+
+        return;
+      }
+
       console.log('Message: ', response.data);
-      navigate('/login', true);
+      // navigate('/login', true);
     }
 
     return (
@@ -52,7 +89,9 @@ function SignupComponent() {
         <h1>Sign up</h1>
         <div className="signup-form">
             <div className="input-group">
-              <div className='errorMessage'>{errorMessage}</div>
+              {errorMessage && (
+                <p className='error-message'>{errorMessage}</p>
+              )}
               <label htmlFor="username">Email address</label>
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} id="username" placeholder="john.smith@gmail.com"/>
 

@@ -21,7 +21,11 @@ function LoginComponent() {
         return false;
       }
 
-      // TODO validate form
+      if (!email.toLowerCase()
+          .match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            setErrorMessage("Email is not valid.");
+            return false;
+      }
 
       return true;
     }
@@ -38,7 +42,12 @@ function LoginComponent() {
         password: password,
       }).catch(error => {
         console.error('Login failed', error.response ? error.response.data : error.message);
+        setErrorMessage("Email or password are incorrect.");
       });
+
+      if (response === undefined) {
+        return;
+      }
 
       console.log('Message: ', response.data);
 
