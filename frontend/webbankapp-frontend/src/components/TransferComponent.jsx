@@ -8,13 +8,39 @@ function TransferComponent() {
   const [recipientAccountId, setRecipientAccountId] = useState('');
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const cookies = new Cookies();
 
   const navigate = useNavigate();
 
+  const validateForm = () => {
+      if (recipientAccountId === "" || amount === "" || description === "") {
+        setErrorMessage("Fields cannot be empty.");
+        return false;
+      }
+
+      if (!recipientAccountId.match(/^\d{26}/)) {
+        setErrorMessage("Invalid recipient account id.");
+        return false;
+      }
+
+      if (!amount.match(/^\d+$/)) {
+        setErrorMessage("Invalid amount.");
+        return false;
+      }
+
+      return true;
+    }
+
   const transferHandler = async () => {
-    // TODO validate form
+    
+    const validated = validateForm();
+    
+    if (!validated) {
+      return;
+    }
+
     const data = {
       description: description,
       amount: +amount,
@@ -27,7 +53,11 @@ function TransferComponent() {
       console.error('Error during transfer.', error.response ? error.response.data : error.message)
     });
 
-    console.log(response.data);
+    if (response.data !== "Transaction successful.") {
+      setErrorMessage(response.data);
+      console.log(response.data);
+      return;
+    }
 
     navigate('/profile', true);
   }
@@ -37,6 +67,10 @@ function TransferComponent() {
         <h1>Transfer</h1>
         <div className="signup-form login-form">
             <div className="input-group">
+              {errorMessage && (
+                <p className='error-message'>{errorMessage}</p>
+              )}
+
               <label htmlFor="recipientAccountId">Recipient account id: </label>
               <input type="text" value={recipientAccountId} onChange={e => setRecipientAccountId(e.target.value)} id="recipientAccountId" placeholder="18361311011808245122106297"/>
 

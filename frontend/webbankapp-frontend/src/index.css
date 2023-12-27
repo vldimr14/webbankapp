@@ -107,6 +107,11 @@ a:active {
   cursor: pointer;
 }
 
+.logout {
+  display: flex;
+  gap: 10px;
+}
+
 /* FOOTER */
 footer {
   display: flex;

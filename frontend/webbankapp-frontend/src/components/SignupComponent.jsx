@@ -72,16 +72,13 @@ function SignupComponent() {
         console.error('Registration failed', error.response ? error.response.data : error.message);
       });
 
-
-      // TODO registration fail
-      if (response.message !== null) {
-        setErrorMessage(response.message);
-
+      if (response.data.message !== null) {
+        setErrorMessage(response.data.message);
+        console.log(response.data.message);
         return;
       }
 
-      console.log('Message: ', response.data);
-      // navigate('/login', true);
+      navigate('/login', true);
     }
 
     return (

@@ -1,11 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom'; 
 import '../index.css';
 import Cookies from 'universal-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 function Header() {
 
   const cookies = new Cookies();
   const navigate = useNavigate();
+
+  let decodedToken;
+  let sessionExpirationTime;
+
+  if (cookies.get('jwt-token')) {
+    decodedToken = jwtDecode(cookies.get('jwt-token'));
+    const currentDate = new Date();
+    sessionExpirationTime = new Date(decodedToken.exp * 1000).getTime() - currentDate.getTime();
+  }
 
   const logout = () => {
     cookies.remove('jwt-token');
@@ -61,9 +71,12 @@ function Header() {
             </Link>
           </div>
         ) : (
-          <button className='btn' onClick={logout}>
-            Log out
-          </button>
+          <div className='logout'>
+            <button className='btn' onClick={logout}>
+              Log out
+            </button>
+            <p className='small-header'>Session expires: {parseInt(sessionExpirationTime / 60000)} min</p>
+          </div>
         )
       }
     </header>
