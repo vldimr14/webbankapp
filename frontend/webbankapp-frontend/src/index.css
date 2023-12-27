@@ -20,6 +20,8 @@
   --small-header-size: 0.9rem;
   --small-header-color: #606060;
   --error-message-color: #ff0000;
+  --link-color: #005790;
+  --legal-link-color: #bcbcbc;
   --btn-font-size: 0.8rem;
 }
 
@@ -81,6 +83,10 @@ a:active {
   color: var(--main-text-color);
 }
 
+.legal-link:visited {
+  color: var(--legal-link-color);
+}
+
 .logo {
   font-size: 1.5rem;
 }
@@ -136,7 +142,7 @@ footer {
 }
 
 .legal-link {
-  color: #bcbcbc;
+  color: var(--legal-link-color);
   font-weight: 300;
   transition: all 0.1s ease;
 }
@@ -212,6 +218,16 @@ footer {
 
 .error-message {
   color: var(--error-message-color);
+}
+
+.legal-consent {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+
+.consent-link {
+  border-bottom: 1px solid var(--active-text-color);
 }
 
 input {

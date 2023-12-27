@@ -13,6 +13,7 @@ function SignupComponent() {
     const [passportId, setPassportId] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [legalConsent, setLegalConsent] = useState(false);
 
     const navigate = useNavigate();
 
@@ -46,6 +47,11 @@ function SignupComponent() {
 
       if (!birthDate.match(/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/)) {
         setErrorMessage("Invalid date of birth format");
+        return false;
+      }
+
+      if (!legalConsent) {
+        setErrorMessage("Please agree to our terms of service.")
         return false;
       }
 
@@ -109,6 +115,13 @@ function SignupComponent() {
 
               <label htmlFor="passwordRepeat">Repeat password</label>
               <input type="password" value={passwordRepeat} onChange={e => setPasswordRepeat(e.target.value)} id="passwordRepeat" placeholder="password"/>
+
+              <div className="legal-consent">
+                <input type="checkbox" id='legal-consent' defaultChecked={legalConsent} onChange={() => setLegalConsent((state) => !state)}/>
+                <label htmlFor="legal-consent" className='small-text'>
+                  Agree to our <Link to={"/terms"} className='consent-link'>terms of service and privacy policy</Link>. 
+                </label>
+              </div>
                 
               <button onClick={handleRegistration} className="btn btn-submit">Sign up</button>
               

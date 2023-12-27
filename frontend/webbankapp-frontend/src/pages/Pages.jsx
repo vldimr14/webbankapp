@@ -5,6 +5,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Login from './Login';
 import Signup from './Signup';
 import TransactionDetails from './TransactionDetails';
+import TermsOfUse from './TermsOfUse';
 
 function Pages() {
   return (
@@ -20,6 +21,7 @@ function Pages() {
         <Route path='/profile/transfer' element={<Transfer />} />
         <Route path='/profile/history' element={<Home />} />
         <Route path='/profile/transactions/:transactionId' element={<TransactionDetails />}/>
+        <Route path='/terms' element={<TermsOfUse />}/>
       </Routes>
     </BrowserRouter>
   );

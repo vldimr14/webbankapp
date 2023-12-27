@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import '../index.css';
 import api from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ function LoginComponent() {
 
     const cookies = new Cookies();
 
-    const validateForm = () => {
+    const validateForm = async () => {
       if (email == "" || password == "") {
         setErrorMessage("Fields cannot be empty.");
         return false;
