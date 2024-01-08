@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,10 @@ public class AccountService {
                     .build();
         }
 
-        ArrayList<Transaction> transactions = getTransactions(bankAccount.getId());
+        // get 10 latest transactions
+        ArrayList<Transaction> transactions = new ArrayList<>(getTransactions(bankAccount.getId()).stream().limit(10)
+                .collect(Collectors.toList()));
+
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonTransactions = "";
         try {
@@ -83,7 +87,28 @@ public class AccountService {
     }
 
     public ArrayList<Transaction> getTransactions(String accountId) {
-        return transactionRepository.findAllBySenderIdOrRecipientId(accountId, accountId);
+        return transactionRepository.findAllBySenderIdOrRecipientIdOrderByDateDesc(accountId, accountId);
+    }
+
+    public String getTransactions(Principal principal) {
+        User user = getUserInfo(principal);
+        BankAccount bankAccount = getBankAccountInfo(user.getId());
+        String accountId = bankAccount.getId();
+
+        ArrayList<Transaction> transactions = transactionRepository
+                .findAllBySenderIdOrRecipientIdOrderByDateDesc(accountId, accountId);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonTransactions = "";
+        try {
+            jsonTransactions = objectMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(transactions);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return jsonTransactions;
     }
 
     public String getTransaction(String id) {

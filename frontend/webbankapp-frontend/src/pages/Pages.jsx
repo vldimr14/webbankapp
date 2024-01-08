@@ -6,6 +6,7 @@ import Login from './Login';
 import Signup from './Signup';
 import TransactionDetails from './TransactionDetails';
 import TermsOfUse from './TermsOfUse';
+import Transactions from './Transactions';
 
 function Pages() {
   return (
@@ -21,6 +22,7 @@ function Pages() {
         <Route path='/profile/transfer' element={<Transfer />} />
         <Route path='/profile/history' element={<Home />} />
         <Route path='/profile/transactions/:transactionId' element={<TransactionDetails />}/>
+        <Route path='/profile/transactions' element={<Transactions />} />
         <Route path='/terms' element={<TermsOfUse />}/>
       </Routes>
     </BrowserRouter>

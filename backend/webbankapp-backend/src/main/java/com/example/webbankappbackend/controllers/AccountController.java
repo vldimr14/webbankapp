@@ -43,4 +43,9 @@ public class AccountController {
     public ResponseEntity<String> getTransaction(@RequestParam String id) {
         return ResponseEntity.ok(service.getTransaction(id));
     }
+
+    @GetMapping("/all_transactions")
+    public ResponseEntity<String> getTransactions(Principal principal) {
+        return ResponseEntity.ok(service.getTransactions(principal));
+    }
 }

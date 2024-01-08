@@ -79,9 +79,9 @@ function  ProfileComponent() {
         )}
       </div>
 
-      {/* Render short transaction history (TODO 15 latest) */
+      {/* Render short transaction history */
         profileData.bankAccountId && (
-         <div className="card">
+         <div className="card transactions-card">
           <h2 className='medium-header'>Latest transactions</h2>
           <table>
             <thead>
@@ -124,6 +124,9 @@ function  ProfileComponent() {
               })}
             </tbody>
           </table>
+          <Link to={`transactions`} state={profileData}>
+            <button className="btn">More</button>
+          </Link>
          </div> 
         )}
     </div>
