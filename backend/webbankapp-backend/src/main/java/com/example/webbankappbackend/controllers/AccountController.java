@@ -5,6 +5,7 @@ import java.security.Principal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.webbankappbackend.account.AccountInfoResponse;
@@ -36,5 +37,15 @@ public class AccountController {
     public ResponseEntity<String> transfer(@RequestBody TransferRequest transferRequest,
             Principal principal) {
         return ResponseEntity.ok(service.transfer(transferRequest, principal));
+    }
+
+    @GetMapping("/transactions")
+    public ResponseEntity<String> getTransaction(@RequestParam String id) {
+        return ResponseEntity.ok(service.getTransaction(id));
+    }
+
+    @GetMapping("/all_transactions")
+    public ResponseEntity<String> getTransactions(Principal principal) {
+        return ResponseEntity.ok(service.getTransactions(principal));
     }
 }

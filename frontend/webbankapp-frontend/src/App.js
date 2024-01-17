@@ -1,11 +1,12 @@
 import './index.css';
-import SignupForm from './components/SignupForm.js';
-import LoginForm from './components/LoginForm.js';
+import Pages from './pages/Pages';
 
 function App() {
 
   return (
-    <LoginForm />
+    <div>
+      <Pages />
+    </div>
   )
 }
 

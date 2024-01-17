@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,8 @@ import com.example.webbankappbackend.models.User;
 import com.example.webbankappbackend.repositories.BankAccountRepository;
 import com.example.webbankappbackend.repositories.TransactionRepository;
 import com.example.webbankappbackend.repositories.UserRepository;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,13 +43,28 @@ public class AccountService {
                     .build();
         }
 
+        // get 10 latest transactions
+        ArrayList<Transaction> transactions = new ArrayList<>(getTransactions(bankAccount.getId()).stream().limit(10)
+                .collect(Collectors.toList()));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonTransactions = "";
+        try {
+            jsonTransactions = objectMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(transactions);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         return AccountInfoResponse.builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .bankAccountId(bankAccount.getId())
                 .bankAccountBalance(bankAccount.getBalance())
                 .bankAccountCurrency(bankAccount.getCurrency())
-                .transactions(new Gson().toJson(getTransactions(bankAccount.getId()).toString()))
+                .transactions(jsonTransactions)
                 .build();
     }
 
@@ -70,7 +87,44 @@ public class AccountService {
     }
 
     public ArrayList<Transaction> getTransactions(String accountId) {
-        return transactionRepository.findAllBySenderIdOrRecipientId(accountId, accountId);
+        return transactionRepository.findAllBySenderIdOrRecipientIdOrderByDateDesc(accountId, accountId);
+    }
+
+    public String getTransactions(Principal principal) {
+        User user = getUserInfo(principal);
+        BankAccount bankAccount = getBankAccountInfo(user.getId());
+        String accountId = bankAccount.getId();
+
+        ArrayList<Transaction> transactions = transactionRepository
+                .findAllBySenderIdOrRecipientIdOrderByDateDesc(accountId, accountId);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonTransactions = "";
+        try {
+            jsonTransactions = objectMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(transactions);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return jsonTransactions;
+    }
+
+    public String getTransaction(String id) {
+        Transaction transaction = transactionRepository.findById(id).orElseThrow();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonTransaction = "";
+        try {
+            jsonTransaction = objectMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(transaction);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return jsonTransaction;
     }
 
     public String createAccount(Principal principal) {

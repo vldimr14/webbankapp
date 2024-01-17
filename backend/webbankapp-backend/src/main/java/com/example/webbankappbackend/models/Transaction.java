@@ -2,6 +2,9 @@ package com.example.webbankappbackend.models;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,6 +24,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "transactions")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Transaction {
     @Id
     private String id;
@@ -43,13 +47,4 @@ public class Transaction {
 
     @Column(nullable = false)
     private String date;
-
-    @Override
-    public String toString() {
-        return "Transaction [id=" + id + ", description=" + description + ", amount=" + amount + ", currency="
-                + currency + ", type=" + type + ", sender=" + sender.getId() + ", recipient=" + recipient.getId()
-                + ", date=" + date
-                + "]";
-    }
-
 }

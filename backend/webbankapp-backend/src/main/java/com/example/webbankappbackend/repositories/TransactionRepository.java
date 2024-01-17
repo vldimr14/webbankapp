@@ -18,5 +18,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
 
     List<Transaction> findAllByRecipientId(String id);
 
-    ArrayList<Transaction> findAllBySenderIdOrRecipientId(String senderId, String recipientId);
+    ArrayList<Transaction> findAllBySenderIdOrRecipientIdOrderByDateDesc(String senderId, String recipientId);
 }
