@@ -8,8 +8,6 @@ Web bank application using Java, Spring Boot, MySQL and React.
 - Transaction history with details
 
 ## Screenshots
-### Home page
-![home page][home]
 
 ### User registration and login
 ![sign up page][signup]
@@ -25,25 +23,16 @@ Web bank application using Java, Spring Boot, MySQL and React.
 ![transfer page][transfer]
 
 ### Transaction details
-![transaction details][transaction-details]
-[home-page]:
-https://github.com/vldimr14/webbankapp/tree/main/screenshots/home-page.png
-[signup]: 
-https://github.com/vldimr14/webbankapp/tree/main/screenshots/signup.png
-[signup1]: 
-https://github.com/vldimr14/webbankapp/tree/main/screenshots/signup1.png
-[login]: 
-https://github.com/vldimr14/webbankapp/tree/main/screenshots/login.png
-[profile]: 
-https://github.com/vldimr14/webbankapp/tree/main/screenshots/profile.png
-[profile1]: 
-https://github.com/vldimr14/webbankapp/tree/main/screenshots/profile1.png
-[transactions]: 
-https://github.com/vldimr14/webbankapp/tree/main/screenshots/transactions.png
-[transactions-details]: 
-https://github.com/vldimr14/webbankapp/tree/main/screenshots/transaction-details.png
-[transfer]: 
-https://github.com/vldimr14/webbankapp/tree/main/screenshots/transfer.png
+![transaction details][transactions-details]
+
+[signup]: /screenshots/signup.png
+[signup1]: /screenshots/signup1.png
+[login]: screenshots/login.png
+[profile]: /screenshots/profile.png
+[profile1]: /screenshots/profile1.png
+[transactions]: /screenshots/transactions.png
+[transactions-details]: /screenshots/transaction-details.png
+[transfer]: /screenshots/transfer.png
 
 
 
